@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Divisas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+
+        form {
+            margin: 20px 0;
+        }
+
+        input {
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calculadora de Divisas</h1>
+
+    <form id="calculatorForm">
+        <input type="number" id="amount" step="0.01" placeholder="Cantidad" required>
+        <select id="fromCurrency" required>
+            <option value="USD">Dólares estadounidenses (USD)</option>
+            <option value="EUR">Euros (EUR)</option>
+            <option value="GBP">Libras esterlinas (GBP)</option>
+            <option value="DOP">Pesos dominicanos (DOP)</option>
+        </select>
+        <span> a </span>
+        <select id="toCurrency" required>
+            <option value="USD">Dólares estadounidenses (USD)</option>
+            <option value="EUR">Euros (EUR)</option>
+            <option value="GBP">Libras esterlinas (GBP)</option>
+            <option value="DOP">Pesos dominicanos (DOP)</option>
+        </select>
+        <button type="button" onclick="calculate()">Calcular</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function calculate() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            // Lógica de conversión de divisas
+            const conversionRate = getConversionRate(fromCurrency, toCurrency);
+            const result = amount * conversionRate;
+
+            document.getElementById('result').innerText = `${amount} ${fromCurrency} = ${result.toFixed(2)} ${toCurrency}`;
+        }
+
+        function getConversionRate(fromCurrency, toCurrency) {
+            // Puedes implementar lógica para obtener tasas de conversión reales aquí
+            // En este ejemplo, se utilizan tasas de conversión ficticias
+            const conversionRates = {
+                'USD': { 'EUR': 0.85, 'GBP': 0.75, 'DOP': 57.50 },
+                'EUR': { 'USD': 1.18, 'GBP': 0.89, 'DOP': 67.65 },
+                'GBP': { 'USD': 1.33, 'EUR': 1.12, 'DOP': 75.80 },
+                'DOP': { 'USD': 0.0174, 'EUR': 0.0148, 'GBP': 0.0132 }
+            };
+
+            return conversionRates[fromCurrency][toCurrency];
+        }
+    </script>
+
+</body>
+</html>
